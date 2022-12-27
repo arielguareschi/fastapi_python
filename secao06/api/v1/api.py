@@ -1,9 +1,9 @@
 from fastapi import APIRouter
 
-from api.v1.endpoints import curso
+from secao06.api.v1.endpoints import artigo
 
 
 api_router = APIRouter()
-api_router.include_router(curso.router, prefix='/cursos', tags=['cursos'])
+api_router.include_router(artigo.router, prefix='/artigos', tags=['artigos'])
 
 

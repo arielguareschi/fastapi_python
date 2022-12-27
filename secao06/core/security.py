@@ -3,7 +3,7 @@ from passlib.context import CryptContext
 CRYPTO = CryptContext(schemes=['bcrypt'], deprecated='auto')
 
 
-def verficar_senha(senha: str, hash_senha: str) -> bool:
+def verificar_senha(senha: str, hash_senha: str) -> bool:
     '''
         funcao para verificar se a senha esta correta, comparando a senha com o hash
     '''
