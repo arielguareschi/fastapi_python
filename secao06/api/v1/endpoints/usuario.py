@@ -45,7 +45,7 @@ async def get_usuarios(db: AsyncSession = Depends(get_session)):
     async with db as session:
         query = select(UsuarioModel)
         result = await session.execute(query)
-        usuarios: List[UsuarioSchemaBase] = result.scalars().unique.all()
+        usuarios: List[UsuarioSchemaBase] = result.scalars().unique().all()
 
         return usuarios
 
