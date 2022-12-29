@@ -6,6 +6,7 @@ from fastapi.security import OAuth2PasswordRequestForm
 
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
+from sqlalchemy.exc import IntegrityError
 
 from models.usuario_model import UsuarioModel
 from schemas.usuario_schema import UsuarioSchemaBase, UsuarioSchemaArtigos, UsuarioSchemaCreate, UsuarioSchemaUp
@@ -33,10 +34,14 @@ async def post_usuario(usuario: UsuarioSchemaCreate, db: AsyncSession = Depends(
                                                   usuario.senha),
                                               eh_admin=usuario.eh_admin)
     async with db as session:
-        session.add(novo_usuario)
-        await session.commit()
+        try:
+            session.add(novo_usuario)
+            await session.commit()
 
-        return novo_usuario
+            return novo_usuario
+        except IntegrityError: 
+            raise HTTPException(status_code=status.HTTP_406_NOT_ACCEPTABLE, detail="Ja existe esse e-mail cadastrado")
+            
 
 
 # GET Usuarios
